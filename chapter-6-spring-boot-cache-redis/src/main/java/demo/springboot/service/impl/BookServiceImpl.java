@@ -21,39 +21,41 @@ import java.util.List;
 @CacheConfig(cacheNames = "books")
 public class BookServiceImpl implements BookService {
 
-    @Autowired
-    BookRepository bookRepository;
+  @Autowired
+  BookRepository bookRepository;
 
-    @Override
-    public List<Book> findAll() {
-        return bookRepository.findAll();
-    }
+  @Override
+  public List<Book> findAll() {
+    return bookRepository.findAll();
+  }
 
-    @Override
-    public Book insertByBook(Book book) {
-        return bookRepository.save(book);
-    }
+  @Override
+  public Book insertByBook(Book book) {
+    return bookRepository.save(book);
+  }
 
-    @CachePut(key = "#p0.id")
-    @Override
-    public Book update(Book book) {
-        System.out.println(" call update method ");
-        return bookRepository.save(book);
-    }
+  @CachePut(key = "#p0.id")
+  @Override
+  public Book update(Book book) {
+    System.out.println(" call update method ");
+    return bookRepository.save(book);
+  }
 
-    @CacheEvict(key = "#p0")
-    @Override
-    public Book delete(Long id) {
-        System.out.println(" call delete method ");
-        Book book = bookRepository.findById(id).get();
-        bookRepository.delete(book);
-        return book;
-    }
+  @CacheEvict(key = "#p0")
+  @Override
+  public Book delete(Long id) {
+    System.out.println(" call delete method ");
+    // Book book = bookRepository.findById(id).get();
+    Book book = null;
+    bookRepository.delete(book);
+    return book;
+  }
 
-    @Cacheable(key = "#p0")
-    @Override
-    public Book findById(Long id) {
-        System.out.println(" call findById method ");
-        return bookRepository.findById(id).get();
-    }
+  @Cacheable(key = "#p0")
+  @Override
+  public Book findById(Long id) {
+    System.out.println(" call findById method ");
+    // return bookRepository.findById(id).get();
+    return null;
+  }
 }
